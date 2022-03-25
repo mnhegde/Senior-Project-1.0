@@ -3,7 +3,7 @@ import {Table, Container, Button} from 'react-bootstrap'
 
 const Home = props => {
 
-    const promptList = ["Test", "Presidential Election"];
+    const promptList = ["Test", "Presidential Election", "State Election", "Local Election"];
 
     return (
         <Container>
@@ -17,11 +17,11 @@ const Home = props => {
                 </thead>
                 <tbody>
                     {
-                        promptList.map((el, index) => {
+                        promptList.map((name, index) => {
                             return (
                             <tr key={index}>
                                 <td>{index+1}</td>
-                                <td>{el}</td>
+                                <td>{name}</td>
                                 <td><Button>Go To Poll</Button></td>
                             </tr>
                         )

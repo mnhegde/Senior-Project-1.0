@@ -6,7 +6,7 @@ const PollingStation = props => {
 
 const [candidate1, setCandidate1] = useState(LoadingCircles)
 const [candidate2, setCandidate2] = useState(LoadingCircles)
-const [showResults, setShowResults] = useState(true)
+const [showResults, setShowResults] = useState(false)
 
     return (
         <Container>

@@ -33,7 +33,7 @@ export default function App() {
       </Nav>
       <Nav>
         <Nav.Link href="/NewPoll" >New Poll</Nav.Link>
-        <Nav.Link onClick={window.accountId===''?login:logout}>{window.accountId===''?"Login":window.accountId}</Nav.Link>
+        <Nav.Link onClick={window.accountId==='' ? login : logout}>{window.accountId==='' ? "Login" : window.accountId}</Nav.Link>
       </Nav>
       </Navbar.Collapse>
       </Container>
