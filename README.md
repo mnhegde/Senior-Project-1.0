@@ -4,6 +4,4 @@ A blockchain-based application that improves upon the security, transparency, an
 
 
 Tech Stack:
-Front-End: React, HTML/CSS, UI
-Median: 
-Back-End: Python, Server-less
+Near, React
