@@ -1,34 +1,84 @@
-/*
- * This is an example of an AssemblyScript smart contract with two simple,
- * symmetric functions:
- *
- * 1. setGreeting: accepts a greeting, such as "howdy", and records it for the
- *    user (account_id) who sent the request
- * 2. getGreeting: accepts an account_id and returns the greeting saved for it,
- *    defaulting to "Hello"
- *
- * Learn more about writing NEAR smart contracts with AssemblyScript:
- * https://docs.near.org/docs/develop/contracts/as/intro
- *
- */
+import { logging, PersistentMap } from 'near-sdk-as'
 
-import { Context, logging, storage } from 'near-sdk-as'
 
-const DEFAULT_MESSAGE = 'Hello'
+const candidateURL = new PersistentMap<string, string>("CandidateURL");
+const candidatePair = new PersistentMap<string, string[]>("Candidate Pair");
+const promptArray = new PersistentMap<string, string[]>("Array of Prompts");
+const voteArray = new PersistentMap<string, i32[]>("Storing for Votes");
+const userParticipation = new PersistentMap<string, string[]>("User Participation");
 
-// Exported functions will be part of the public interface for your smart contract.
-// Feel free to extract behavior to non-exported functions!
-export function getGreeting(accountId: string): string | null {
-  // This uses raw `storage.get`, a low-level way to interact with on-chain
-  // storage for simple contracts.
-  // If you have something more complex, check out persistent collections:
-  // https://docs.near.org/docs/concepts/data-storage#assemblyscript-collection-types
-  return storage.get<string>(accountId, DEFAULT_MESSAGE)
+
+//View Methods - Fetching or viewing information on blockchain (no transaction fee)
+export function getURL(name: string):string {
+  if(candidateURL.contains(name))
+    return candidateURL.getSome(name);
+  else 
+    return "";
 }
 
-export function setGreeting(message: string): void {
-  const accountId = Context.sender
-  // Use logging.log to record logs permanently to the blockchain!
-  logging.log(`Saving greeting "${message}" for account "${accountId}"`)
-  storage.set(accountId, message)
+export function checkParticipation(prompt: string, user: string):bool {
+  if(userParticipation.contains(prompt)) {
+    let arr = userParticipation.getSome(prompt);
+    return arr.includes(user);
+  }
+  logging.log("This prompt doesn't exist")
+  return false;
 }
+
+export function getPrompts():string[] {
+  if (promptArray.contains("allArrays")) {
+    return promptArray.getSome("allArrays");
+  }
+  logging.log("No Prompts Found")
+  return []
+}
+
+export function getVotes(prompt: string):i32[] {
+  if(voteArray.contains(prompt)) {
+    return voteArray.getSome(prompt)
+  }
+  logging.log("Prompt Not Found")
+  return [0, 0]
+}
+
+//Change Methods - Adds or modifies information on blockchain (transaction fee)
+export function addURL(name: string, url: string):void {
+  candidateURL.set(name, url);
+  logging.log("URL added for " + name);
+}
+
+export function addCandidatePair(prompt: string, name1: string, name2: string):void {
+  candidatePair.set(prompt, [name1, name2]);
+}
+
+export function addPrompt(prompt: string):void {
+  if(promptArray.contains("allArrays")) {
+    let arr = promptArray.getSome("allArrays");
+    arr.push(prompt);
+  } else {
+    promptArray.set("allArrays", [prompt]);
+  }
+}
+
+export function addVote(prompt: string, index: i32):void {
+  if(voteArray.contains(prompt)) {
+      let arr = voteArray.getSome(prompt);
+      arr[index] += 1;
+      voteArray.set(prompt, arr);
+  } else {
+    let arr = [0,0];
+    arr[index] = 1;
+    voteArray.set(prompt, arr);
+  }
+}
+
+export function checkUserRecord(prompt: string, user: string):void {
+  if(userParticipation.contains(prompt)) {
+    let arr = userParticipation.getSome(prompt);
+    arr.push(user);
+    userParticipation.set(prompt, arr);
+  } else {
+    userParticipation.set(prompt, [user]);
+  }
+}
+
