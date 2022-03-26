@@ -21,6 +21,15 @@ const { networkId } = getConfig(process.env.NODE_ENV || 'development')
 
 export default function App() {
 
+  const changeCandidates = async(prompt) => {
+    console.log(prompt);
+    let namePair = await window.contract.getCandidatePair({prompt: prompt})
+    localStorage.setItem("Candidate1", namePair[0]);
+    localStorage.setItem("Candidate2", namePair[1]);
+    localStorage.setItem("Prompt", prompt);
+    window.location.replace(window.location.href + "PollingStation");
+  }
+
   return ( 
   <Router>
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -39,7 +48,7 @@ export default function App() {
       </Container>
     </Navbar>
     <Routes>
-      <Route exact path="/" element={<Home/>}></Route>
+      <Route exact path="/" element={<Home changeCandidates={changeCandidates} />}></Route>
       <Route exact path="/PollingStation" element={<PollingStation/>}></Route>
       <Route exact path="/NewPoll" element={<NewPoll/>}></Route>
     </Routes>

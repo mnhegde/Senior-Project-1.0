@@ -4,7 +4,7 @@ import { logging, PersistentMap } from 'near-sdk-as'
 const candidateURL = new PersistentMap<string, string>("CandidateURL");
 const candidatePair = new PersistentMap<string, string[]>("Candidate Pair");
 const promptArray = new PersistentMap<string, string[]>("Array of Prompts");
-const voteArray = new PersistentMap<string, i32[]>("Storing for Votes");
+const voteArray = new PersistentMap<string, i32[]>("Storing of Votes");
 const userParticipation = new PersistentMap<string, string[]>("User Participation");
 
 
@@ -12,8 +12,7 @@ const userParticipation = new PersistentMap<string, string[]>("User Participatio
 export function getURL(name: string):string {
   if(candidateURL.contains(name))
     return candidateURL.getSome(name);
-  else 
-    return "";
+  return "";
 }
 
 export function checkParticipation(prompt: string, user: string):bool {
@@ -41,6 +40,15 @@ export function getVotes(prompt: string):i32[] {
   return [0, 0]
 }
 
+export function getCandidatePair(prompt: string):string[] {
+  if(candidatePair.contains(prompt))
+    return candidatePair.getSome(prompt)
+  else {
+    logging.log("Prompt not found");
+    return [];
+  }
+}
+
 //Change Methods - Adds or modifies information on blockchain (transaction fee)
 export function addURL(name: string, url: string):void {
   candidateURL.set(name, url);
@@ -52,9 +60,11 @@ export function addCandidatePair(prompt: string, name1: string, name2: string):v
 }
 
 export function addPrompt(prompt: string):void {
+  logging.log("Added prompt to array")
   if(promptArray.contains("allArrays")) {
     let arr = promptArray.getSome("allArrays");
     arr.push(prompt);
+    promptArray.set("allArrays", arr);
   } else {
     promptArray.set("allArrays", [prompt]);
   }
