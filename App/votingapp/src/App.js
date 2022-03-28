@@ -17,17 +17,34 @@ import { VscHome } from "react-icons/vsc";
 import getConfig from './config'
 
 
+/* ***TODO***
+Edge cases for form submission (checking blank fields before submitting)
+
+Efficiency (cleaning up lines in useEffect, smart contracts, styles for HTML)
+
+Clearing prompts/users from blockchain when needed (smart contracts)
+
+display image for candidate using URL
+
+Add loading animations when updating blockchain (creating new poll, submitting vote, etc.)
+*/
+
+
 const { networkId } = getConfig(process.env.NODE_ENV || 'development')
 
 export default function App() {
 
   const changeCandidates = async(prompt) => {
-    console.log(prompt);
-    let namePair = await window.contract.getCandidatePair({prompt: prompt})
-    localStorage.setItem("Candidate1", namePair[0]);
-    localStorage.setItem("Candidate2", namePair[1]);
-    localStorage.setItem("Prompt", prompt);
-    window.location.replace(window.location.href + "PollingStation");
+    if (window.accountId==='') {
+      alert("Please log in to access the voting booths!");
+    } else {
+      console.log(prompt);
+      let namePair = await window.contract.getCandidatePair({prompt: prompt})
+      localStorage.setItem("Candidate1", namePair[0]);
+      localStorage.setItem("Candidate2", namePair[1]);
+      localStorage.setItem("Prompt", prompt);
+      window.location.replace(window.location.href + "PollingStation");
+    }
   }
 
   return ( 
