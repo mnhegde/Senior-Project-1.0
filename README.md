@@ -3,6 +3,22 @@ votingapp
 
 This [React] app was initialized with [create-near-app]
 
+Instructions for Running Locally
+===========
+1. Clone this repository by copying the link (click the green "Code" dropdown and copy the link under "HTTPS") and running `git clone [Repo URL]` in your command line/terminal
+2. Navigate to the cloned folder on your computer by typing `cd Senior-Project-1.0/App/votingapp` in your terminal
+3. To install all necessary dependencies, run `yarn install`. This will read all the packages in `package.json` and install them accordingly for the application to run
+4. Run `yarn build` to fully compile the smart contracts for the application to use
+5. Run `yarn start` to start the application! It should automatically open up in your browser
+6. To be able to access the voting polls and cast votes, you must make a NEAR account. Register for this by clicking "Login" in the top-right of the homepage
+   1. Make multiple accounts to see how changes are reflected for all users
+7. View the demo video below to learn how to make a new poll, cast votes for polls, view vote counts, and see the protections against double voting or voting without authentication
+
+
+Demo
+===========
+[Video of using application: create poll, cast vote, view results, etc.]
+
 
 Quick Start
 ===========
