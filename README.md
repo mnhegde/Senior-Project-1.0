@@ -20,6 +20,15 @@ Demo
 [Video of using application: create poll, cast vote, view results, etc.]
 
 
+Improvements
+===========
+1. Establishing different levels of voting for the system (i.e. federal, state, and local levels)
+2. Think about different views from general users and admins/officials (as all users can create and view all polls)
+3. No use of encryption or security of data (a necessity for a large-scale network)
+4. For true implementation, a registration system using government issued IDs would need to be added (as seen in version 2.0)
+5. Would ideally have electronic polling booths that people would have to go to for voting, but could potentially have people vote on their own devices (although this opens up vulnerabilities)
+
+
 Quick Start
 ===========
 
