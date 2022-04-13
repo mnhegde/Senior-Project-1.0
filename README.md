@@ -17,7 +17,7 @@ Instructions for Running Locally
 
 Demo
 ===========
-[Video of using application: create poll, cast vote, view results, etc.]
+https://user-images.githubusercontent.com/54085487/163087836-dc46b697-96d8-49e6-be74-434aaf751a2b.mp4
 
 
 Improvements
